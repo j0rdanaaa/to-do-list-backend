@@ -2,12 +2,7 @@ import express, { Request, Response } from "express";
 import cors from "cors";
 import { db } from "./database/knex";
 import { TUserDB } from "./types";
-import express, { Request, Response } from "express";
-import cors from "cors";
-import { db } from "./database/knex";
-import { TUserDB } from "./types";
 
-const app = express();
 const app = express();
 
 app.use(cors());
@@ -16,8 +11,6 @@ app.use(cors());
 app.use(express.json());
 
 app.listen(3003, () => {
-  console.log(`Servidor rodando na porta ${3003}`);
-});
   console.log(`Servidor rodando na porta ${3003}`);
 });
 
@@ -158,7 +151,7 @@ app.delete("/users/:id", async (req: Request, res: Response) => {
       res.status(400);
       throw new Error("'id' não encontrado");
     }
-    await db("users_tasks").del().where({ user_id: idToDelete})
+    await db("users_tasks").del().where({ user_id: idToDelete });
     await db("users").del().where({ id: idToDelete });
     res.status(200).send({ message: "User deletado com sucesso" });
   } catch (error) {
@@ -188,9 +181,9 @@ app.get("/tasks", async (req: Request, res: Response) => {
       res.status(200).send(result);
     } else {
       const result = await db("tasks")
-      .where("title", "LIKE", `%${searchTerm}%`)
-      .orWhere("description","LIKE", `%${searchTerm}%`)
-      
+        .where("title", "LIKE", `%${searchTerm}%`)
+        .orWhere("description", "LIKE", `%${searchTerm}%`);
+
       res.status(200).send(result);
     }
   } catch (error) {
