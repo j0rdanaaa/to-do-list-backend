@@ -2,13 +2,22 @@ import express, { Request, Response } from "express";
 import cors from "cors";
 import { db } from "./database/knex";
 import { TUserDB } from "./types";
+import express, { Request, Response } from "express";
+import cors from "cors";
+import { db } from "./database/knex";
+import { TUserDB } from "./types";
 
+const app = express();
 const app = express();
 
 app.use(cors());
 app.use(express.json());
+app.use(cors());
+app.use(express.json());
 
 app.listen(3003, () => {
+  console.log(`Servidor rodando na porta ${3003}`);
+});
   console.log(`Servidor rodando na porta ${3003}`);
 });
 
@@ -155,6 +164,9 @@ app.delete("/users/:id", async (req: Request, res: Response) => {
   } catch (error) {
     console.log(error);
 
+    if (req.statusCode === 200) {
+      res.status(500);
+    }
     if (req.statusCode === 200) {
       res.status(500);
     }
